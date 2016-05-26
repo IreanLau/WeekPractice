@@ -206,6 +206,7 @@ void getLeastNum(int* input, int len, int* output, int k)
 }
 
 /*		解法2 利用 冒泡的思想 O(n*k),改变数组	*/
+
 vector<int> getLeastNumWithBubble(vector<int>input, int k)
 {
 	if (input.empty() || k>input.size())
@@ -225,20 +226,22 @@ vector<int> getLeastNumWithBubble(vector<int>input, int k)
 /*
 	解法3：
 		最大堆：O(nlg^n)	不会改变原有数组，适合海量数据处理
-		这里利用 set，但是 set会去重复
+		这里利用 set，但是 set会去重复，使用multiset解决
 */
 vector<int> getLeastNumWithHeap(vector<int>input, int k)
 {
 	if (input.empty() || k>input.size())
 		exit(1);
 
+	multiset<int> Tree;
 	vector<int> res;
-	set<int> Tree;
 	for (int i = 0; i < input.size(); ++i)
 		Tree.insert(input[i]);
 
-	for (int i = 0; i < k; ++i)
-		res.push_back(Tree[i]);
+	multiset<int>::iterator it = Tree.begin();
+	int i = 0;
+	for (; i<k; ++i,++it)
+		res.push_back(*it);
 
 	return res;
 }
@@ -262,9 +265,12 @@ void TsetgetLeastNum()
 	int ar[11] = {8,5,9,34,7,2,5,57,7,90,3};
 	int br[10] = { 0 };
 
-	getLeastNum(ar, 11, br, 4);
-	for (int i = 0; i < 4; ++i)
-		cout << br[i] << " ";
+	//getLeastNum(ar, 11, br, 4);
+	vector<int>arV(ar,ar+11);
+	//vector<int>brV = getLeastNumWithHeap(arV, 4);
+	vector<int>brV = getLeastNumWithBubble(arV, 4);
+	for (int i = 0; i < brV.size(); ++i)
+		cout << brV[i] << " ";
 	cout << endl;
 }
 
