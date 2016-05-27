@@ -225,7 +225,7 @@ vector<int> getLeastNumWithBubble(vector<int>input, int k)
 }
 /*
 	解法3：
-		最大堆：O(nlg^n)	不会改变原有数组，适合海量数据处理
+		最大堆：O(nlg^k)	不会改变原有数组，适合海量数据处理
 		这里利用 set，但是 set会去重复，使用multiset解决
 */
 vector<int> getLeastNumWithHeap(vector<int>input, int k)
@@ -250,16 +250,279 @@ vector<int> getLeastNumWithHeap(vector<int>input, int k)
 	31.连续子数组最大和
 	1，-2，3，10，-4，7，2，-5
 */
+/*O(n)*/
 int GetSum(int *ar, int len)
 {
-	return 0;
+	if (ar == NULL || len <= 0)
+		exit(1);
+
+	int MaxSum = 0;
+	int subSum = 0;
+	for (int i = 0; i < len; ++i)
+	{
+		if (subSum < 0)
+			subSum = ar[i];
+		else
+			subSum += ar[i];
+
+		if (subSum > MaxSum)
+			MaxSum = subSum;
+	}
+	return MaxSum;
 }
 
 /*
-
+	32. 1~n中 '1'出现的次数
 */
+/*穷举法 时间复杂度仅和数字的位数有关系， O(n*log^n)*/
+
+int numOf1(int n)
+{
+	int count = 0;
+	while (n)
+	{
+		if (n % 10 == 1)
+			++count;
+		n /= 10;
+	}
+	return count;
+}
+
+int numOf1ToN(int n)
+{
+	int count = 0;
+	for (size_t i = 1; i <= n; ++i)
+		count += numOf1(i);
+	return count;
+}
+
+
+/*
+	数学证明法
+	https://leetcode.com/discuss/44281/4-lines-o-log-n-c-java-python
+	例如： 3141592
+	分成 a:3141  b:592，此时 m=1000
+	以a的最低位取值讨论  
+	最低位为 0, 1 和 >=2
+	0,1时 (n / m % 10 == 1) * (n%m + 1) 
+				当最低位0：  592取不到
+				为1：		即 1000 ~ 1592 共 (592+1)
+	否则： (n / m + 8) / 10 * m
+				当 m==1000时, 重复计算 以'1000'作为模式 的 [a +(最低位>=2)]次  
+*/
+int NumberOf1Between1AndN(int n) 
+{
+	int count = 0;
+	for (long long m = 1; m <= n; m *= 10)
+		count += (n / m + 8) / 10 * m + (n / m % 10 == 1) * (n%m + 1);
+	return count;
+
+}
+
+/*
+	33. 数组排列成最小的数：
+	{3,32,321}	->	321323
+
+	思路：转成字符串，
+	假设有两个数字字符串 a,b
+	比较 ab,ba的大小
+*/
+const int g_maxSize = 10;
+
+char* g_Str1 = new char[g_maxSize * 2 + 1];
+char* g_Str2 = new char[g_maxSize * 2 + 1];
+
+static bool compare(const string& num1, const string& num2)
+{
+	string s1 = num1 + num2;
+	string s2 = num2 + num1;
+
+	return s1<s2;
+}
+
+void printMin(vector<int> numbers)
+{
+	string res;
+	if (numbers.size() <= 0)
+		return;
+
+	vector<string> strNum;							//把vector<int>转化为vector<string>
+	for (int i = 0; i < numbers.size(); ++i)
+	{
+		char* Ins =new char[g_maxSize+1];
+		sprintf(Ins, "%d", numbers[i]);
+		strNum.push_back(string(Ins));
+	}
+	sort(strNum.begin(),strNum.end(),compare);	//
+
+	for (int i = 0; i < strNum.size(); ++i)
+		cout<<strNum[i];
+	cout << endl;
+}
+
+
+/*
+	34.输出第n个丑数
+	丑数（包含2,3,5因子的数）
+	O(n)的解法
+
+	1 习惯被当作第一个丑数
+*/
+int Min(int a, int b, int c)
+{
+	int tmp = (a < b) ? a : b;
+	return (tmp < c) ? tmp:c;
+}
+
+int GetUglyNumber(int index)
+{
+	if (index <= 0)
+		return 0;
+	int *uglyArray = new int[index];
+	uglyArray[0] = 1;
+	int nextUglyIndex = 1;
+
+	int* pMul2 = uglyArray;
+	int* pMul3 = uglyArray;
+	int* pMul5 = uglyArray;
+
+	while (nextUglyIndex < index)
+	{
+		int min = Min(*pMul2*2,*pMul3*3,*pMul5*5);
+		uglyArray[nextUglyIndex] = min;
+
+		while (*pMul2 * 2 <= uglyArray[nextUglyIndex])
+			++pMul2;
+		while (*pMul3 * 3 <= uglyArray[nextUglyIndex])
+			++pMul3;
+		while (*pMul5 * 5 <= uglyArray[nextUglyIndex])
+			++pMul5;
+
+		++nextUglyIndex;
+	}
+	int ugly = uglyArray[nextUglyIndex - 1];
+	delete[]uglyArray;
+	return ugly;
+}
+
+/*
+	35.第一个只出现一个的字符
+	abaccdeff  :-> b
+*/
+//	abbcad 找第一个不重复(重复)的
+//*/
+char findFirstNoRepeat(string A, int n)
+{
+	vector<int> array(256, 0);
+
+	for (int i = 0; i < n; ++i)
+		array[(int)(A[i] - '0')]++;
+	for (int i = 0; i < 256; ++i)
+		if (array[i] == 1)
+			return (i + '0');
+	return	'\0';
+}
+
+char findFirstReplace(string A, int n)
+{
+	vector<int> array(256,0);
+
+	for (int i = 0; i < n; ++i)
+		if (array[(int)(A[i] - '0')]++ == 1)
+			return A[i];
+	return '\0';
+}
+
+/*
+	36.数组中的逆序对
+*/
+/*O(n^2)的解法（冒泡）： 一旦前面的大于后面的，则计数*/
+int InversePairs(vector<int> d)
+{
+	int r = 0;
+	for (int i = 0; i < d.size(); ++i) {
+		for (int j = 0; j < i; ++j) 
+			if (d[j] > d[i]) ++r;
+	}
+	return r;
+}
+
+/*O(nlg^n)的归并解法*/
+int InversePairs(vector<int> data) 
+{
+	if (data.size() <= 0)
+		return 0;
+	vector<int> copy;
+	for (int i = 0; i < data.size(); i++)
+		copy.push_back(data[i]);
+	int count = InversePairsCore(data, copy, 0, data.size() - 1);
+	copy.clear();
+	return count;
+}
+
+int InversePairsCore(vector<int> &data, vector<int>&copy, int start, int end)
+{
+	if (start == end)
+	{
+		copy[start] = data[start];
+		return 0;
+	}
+	int length = (end - start) / 2;
+	int left = InversePairsCore(copy, data, start, start + length);
+	int right = InversePairsCore(copy, data, start + length + 1, end);
+
+	int i = start + length;
+	int j = end;
+	int indexCopy = end;
+	int count = 0;
+	while (i >= start&&j >= start + length + 1)
+	{
+		if (data[i] > data[j])
+		{
+			copy[indexCopy--] = data[i--];
+			count += j - start - length;
+		}
+
+		else
+			copy[indexCopy--] = data[j--];
+	}
+	for (; i >= start; --i)
+		copy[indexCopy--] = data[i];
+	for (; j >= start + length + 1; --j)
+		copy[indexCopy--] = data[j];
+	return left + right + count;
+}
+
+
 
 /************** 部分测试用例  **************************/
+void TestNum1ToN()
+{
+	cout << NumberOf1Between1AndN(20) << endl;
+}
+
+
+void  TestPrintMin()
+{
+	int ar[3] = {3,23,321};
+	vector<int>arV(ar,ar+3);
+	printMin(arV);
+}
+
+void TestUgly()
+{
+	cout << GetUglyNumber(1) << endl; 
+	cout << GetUglyNumber(2) << endl;
+	cout << GetUglyNumber(8) << endl;
+	cout << GetUglyNumber(1500) << endl;
+}
+
+void TestGetSum()
+{
+	int ar[] = {1,-2,3,10,-4,7,2,-5 };
+	cout << GetSum(ar, 8) << endl;
+}
+
 void TsetgetLeastNum()
 {
 	int ar[11] = {8,5,9,34,7,2,5,57,7,90,3};
