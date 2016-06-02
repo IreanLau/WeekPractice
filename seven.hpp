@@ -167,6 +167,200 @@ bool isNumeric(char* string)
 	return numeric && *string == '\0';
 }
 
+/*
+	56.带环链表的入口节点
+*/
+
+struct ListNode
+{
+	int val;
+	struct ListNode* next;
+	ListNode(int v = 0, ListNode* n = NULL)
+		:val(v), next(n)
+	{}
+};
+
+ListNode* findMeetingNode(ListNode* pHead)
+{
+	if (pHead == NULL)
+		exit(1);
+
+	ListNode *pSlow = pHead->next;
+	if (pSlow == NULL)
+		return NULL;
+
+	ListNode* pFast = pSlow->next;
+	while (pFast && pSlow)
+	{
+		if (pFast == pSlow)
+			return pFast;
+
+		pSlow = pSlow->next;
+
+		pFast = pFast = next;
+		if(pFast!=NULL)
+			pFast = pFast = next;
+	}
+	return NULL;
+}
+
+//通过相遇节点找入口节点
+ListNode* EntryNode(ListNode* pHead)
+{
+	ListNode* meetingNode = findMeetingNode(pHead);
+	if (meetingNode == NULL)
+		return NULL;
+
+	int Count = 1; //记录环长
+	ListNode* pCount = meetingNode;
+	while (pCount->next != meetingNode)
+	{
+		pCount = pCount->next;
+		++Count;
+	}
+
+	pCount = pHead;
+	for (int i = 0; i < Count; ++i)
+		pCount = pCount->next;
+
+	ListNode* pEntry = pHead;
+	while (pCount != pEntry)
+	{
+		pCount = pCount->next;
+		pEntry = pEntry->next;
+	}
+	return pEntry;
+}
+
+/*
+	57.删除链表中重复的节点（指相邻两个节点的值相同）
+*/
+void deleteDuplication(ListNode** pHead)	//头节点也可能被删除
+{
+	if (pHead == NULL || *pHead == NULL)
+		return;
+
+	ListNode* pPreNode = NULL;
+	ListNode* pNode = *pHead;
+	while (pNode != NULL)
+	{
+		ListNode* pNext = pNode->next;
+		bool needDelete = false;
+
+		if (pNext != NULL && pNext->val == pNode->val)
+			needDelete = true;
+
+		if (!needDelete)		//不需要删除，则向后遍历
+		{
+			pPreNode = pNode;
+			pNode = pNode->next;
+		}
+		else
+		{
+			int value = pNode->val;
+			ListNode* pToBeDel = pNode;
+			while (pToBeDel != NULL && pToBeDel->val == value)
+			{
+				pNext = pToBeDel->val;
+
+				delete pToBeDel;
+				pToBeDel = NULL;
+
+				pToBeDel = pNext;
+			}
+
+			if (pPreNode == NULL)
+				*pHead = pNext;
+			else
+				pPreNode->next = pNext;
+			pNode = pNext;
+		}
+	}
+}
+
+
+/*
+	58.二叉树的下一个节点
+	包含 父节点
+*/
+struct BinTree
+{
+	int _data;
+	BinTree* _left;
+	BinTree* _right;
+	BinTree* _parent;
+	BinTree(int data = 0, BinTree* l = NULL, BinTree* r = NULL, BinTree* p = NULL)
+		:_data(data)
+		, _left(l)
+		, _right(r)
+		,_parent(p)
+	{}
+};
+
+/*
+	分3种情况：
+	cur是父节点且有右子树，后继是右子树的最左节点
+
+	cur是left时，后继是它的父节点
+	cur没有右树	（例如：cur是左数的最右边，后继是root）
+	则从cur向上遍历，while(cur==dad->right)
+	循环结束找到
+*/
+
+BinTree* GetNextOfInOrder(BinTree* pNode)
+{
+	if (pNode == NULL)
+		return NULL;
+
+	BinTree* pNext = NULL;
+	if (pNode->_right != NULL)
+	{
+		BinTree* pRright = pNode->_right;
+		while (pRright->_left)
+			pRright = pRright->_left;
+
+		pNext = pRright;
+	}
+	else if (pNode->_parent != NULL)
+	{
+		BinTree* pCur = pNode;
+		BinTree* pParent = pNode->_parent;
+		while (pParent != NULL && pCur == pParent->_right)
+		{
+			pCur = pParent;
+			pParent = pParent->_parent;
+		}
+		pNext = pParent;
+	}
+	return pNext;
+}
+
+
+/*
+	59.二叉树的对称（左右）
+	思路：
+	指定新的遍历方式：
+	右->中->左
+	与常规的中序相同 则对称
+*/
+bool isSymmetrical(BinTree* pRoot)
+{
+	return isSymmetrical(pRoot, pRoot);
+}
+
+bool isSymmetrical(BinTree* pRoot1, BinTree* pRoot2)
+{
+	if (pRoot1 == NULL && pRoot2 == NULL)
+		return true;
+	if (pRoot1 == NULL || pRoot2 == NULL)
+		return false;
+	if (pRoot1->val != pRoot2->val)
+		return false;
+
+	return isSymmetrical(pRoot1->_left, pRoot2->_right)
+		&& isSymmetrical(pRoot1->_right, pRoot2->_left);
+}
+
 /**************** 部分测试用例 **********************/
 
 void Test(char* testName, char* string, char* pattern, bool expected)
