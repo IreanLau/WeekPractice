@@ -157,7 +157,7 @@ bool ReadStream(istream& stream, int* number)
 	return isNumeric;
 }
 
-void Deserialize(BinTree* pRoot, ostream& stream)
+void Deserialize(BinTree** pRoot, istream& stream)
 {
 	int num=0;
 	if (ReadStream(stream, &num))
@@ -174,8 +174,165 @@ void Deserialize(BinTree* pRoot, ostream& stream)
 
 }
 
+/*
+	63.二叉搜索树的第k大节点
+	思路：
+	二叉搜索树的 中序遍历 是有序的
+
+*/
+BinTree* KthNodeCore(BinTree* pRoot, size_t& k);
+
+
+BinTree* KthNode(BinTree* pRoot, size_t k)
+{
+	if (pRoot == NULL || k == 0)
+		return NULL;
+
+	return KthNodeCore(pRoot, k);
+}
+
+BinTree* KthNodeCore(BinTree* pRoot, size_t& k)
+{
+	BinTree* target = NULL;
+	if (pRoot->_left != NULL)
+		target = KthNodeCore(pRoot->_left, k);
+
+	if (target == NULL)
+	{
+		if (k == 1)
+			target = pRoot;
+		--k;
+	}
+	if (target == NULL && pRoot->_left != NULL)
+		target = KthNodeCore(pRoot->_right, k);
+	return target;
+}
+
+/*
+	64.数据流中的中位数
+	利用 最大堆 和 最小堆
+	中位数 左边的所有数据插入最大堆
+	右边 插入最小堆 
+	（要保证两个堆的数据差不大于1 数据总量是 偶数，插入小堆中，
+	还要保证 ： 大堆的所有数据小于小堆的所有数据）
+	当 即将插入大堆的数据 大于小堆的任意一个数时：
+	先插入大堆，将大堆顶的数删除并插入小堆。
+*/
+
+template<typename T>
+class DynamicArray
+{
+public:
+	void insert(T num)
+	{
+		if (((min.size() + max.size()) & 1) == 0)  //当偶数时，插入小堆
+		{
+			if (max.size() > 0 && num < max[0])	//不满足 "小堆的数 比 大堆中的大"
+			{
+				max.push_back(num);
+				push_heap(max.begin(),max.end(),less<T>());
+
+				num = max[0];
+
+				pop_heap(max.begin(), max.end(), less<T>());
+				max.pop_back();
+			}
+			min.push_back(num);
+			pop_heap(min.begin(), min.end(), greater<T>());
+		}
+		else
+		{
+			if (min.size() > 0 && num > min[0])
+			{
+				min.push_back(num);
+				push_heap(min.begin(), min.end(), greater<T>());
+
+				num = min[0];
+				pop_heap(min.begin(), min.end(), greater<T>());
+				min.pop_back();
+			}
+			max.push_back(num);
+			pop_heap(max.begin(), max.end(), less<T>());
+		}
+	}
+
+	T GetMedian()
+	{
+		int size = min.size() + max.size();
+		if (size == 0)
+		{
+			cout << "no numbers,will exit" << endl;
+			exit(1);
+		}
+
+		T median = 0;
+		if ((size & 1) == 1)
+			median = min[0];
+		else
+			median = (min[0] + max[0]) / 2;
+
+		return median;
+	}
+private:
+	vector<T> min;
+	vector<T> max;
+};
+
+
+/*
+	65.滑动窗口的最大值
+	{2,3,4,2,6,2,5,1}  一共存在6个滑动窗口，窗口大小3
+	则  最大值	{4,4,6,6,6,5}
+*/
+
+
+vector<int> maxInWindows(vector<int>& num, size_t sizeOfWindows)
+{
+	vector<int> maxInWindows;
+
+	if (num.size() >= sizeOfWindows && sizeOfWindows >= 1)
+	{
+		deque<int> index;
+		for (size_t i = 0; i < sizeOfWindows; ++i)
+		{
+			while (!index.empty() && num[i] >= num[index.back()])
+				index.pop_back();
+
+			index.push_back(i);
+		}
+
+		for (size_t i = sizeOfWindows; i < num.size(); ++i)
+		{
+			maxInWindows.push_back(num[index.front()]);
+
+			while (!index.empty() && num[i] >= num[index.back()])
+				index.pop_back();
+			if (!index.empty() && index.front() <= (int)(i - sizeOfWindows))
+				index.pop_front();
+
+			index.push_back(i);
+		}
+		maxInWindows.push_back(num[index.front()]);
+	}
+	return maxInWindows;
+}
+
+
+
 /**************** 部分测试用例 **********************/
 
+
+
+void TestMaxInWindows()
+{
+	int ar[8] = { 2,3,4,2,6,2,5,1 };
+	vector<int>input(ar,ar+8);
+
+	vector<int>res = maxInWindows(input, 3);
+	for (vector<int>::iterator it = res.begin(); it != res.end(); ++it)
+		cout << *it << " ";
+	cout << endl;
+}
 
 void TestPrint()
 {
@@ -192,4 +349,7 @@ void TestPrint()
 
 	Print(root);		//层打印
 	Print_(root);		//之 形状打印
+
+	size_t k = 4;
+	cout << KthNodeCore(root, k)->_data << endl; //二叉搜索树第k大
 }
