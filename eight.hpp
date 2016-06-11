@@ -1,16 +1,16 @@
 #pragma once
 
 /*
-	60.�Ѷ�������ӡ�ɶ���
+	60.把二叉树打印成多行
 
-	˼·��
-	�������б��� Ԫ��
-	ͬʱ��Ҫ��¼��ǰ��û�д�ӡ�Ľڵ���
-	��¼��һ��ڵ�Ľڵ���Ŀ
+	思路：
+	借助队列保存 元素
+	同时还要记录当前层没有打印的节点数
+	记录下一层节点的节点数目
 
-	pCur����������к�
+	pCur的左右入队列后
 	queue.pop
-	ͬʱ ����������¼����
+	同时 更新两个记录变量
 */
 struct BinTree
 {
@@ -63,11 +63,11 @@ void Print(BinTree* pRoot)
 }
 
 /*
-	61.֮��״ ��ӡ������
-	˼·������ջ
+	61.之形状 打印二叉树
+	思路：两个栈
 
-	�����㣺 �ȱ����� �ٱ����ҵ���һ��ջ��
-	ż���㣺 �ȱ����� �ڱ����󵽵ڶ���ջ��
+	奇数层： 先保存左 再保存右到第一个栈里
+	偶数层： 先保存右 在保存左到第二个栈里
 */
 void Print_(BinTree* pRoot)
 {
@@ -111,11 +111,11 @@ void Print_(BinTree* pRoot)
 
 
 /*
-	62.���л�������
-	��NULL��������ַ�����
+	62.序列化二叉树
+	将NULL用特殊的字符代替
 */
 
-//���л�
+//序列化
 void Serialize(BinTree* pRoot, ostream& stream)
 {
 	if (pRoot == NULL)
@@ -128,7 +128,7 @@ void Serialize(BinTree* pRoot, ostream& stream)
 	Serialize(pRoot->_right, stream);
 }
 
-//�����л�
+//反序列化
 
 bool ReadStream(istream& stream, int* number)
 {
@@ -175,9 +175,9 @@ void Deserialize(BinTree** pRoot, istream& stream)
 }
 
 /*
-	63.�����������ĵ�k��ڵ�
-	˼·��
-	������������ ������� �������
+	63.二叉搜索树的第k大节点
+	思路：
+	二叉搜索树的 中序遍历 是有序的
 
 */
 BinTree* KthNodeCore(BinTree* pRoot, size_t& k);
@@ -209,14 +209,14 @@ BinTree* KthNodeCore(BinTree* pRoot, size_t& k)
 }
 
 /*
-	64.�������е���λ��
-	���� ���� �� ��С��
-	��λ�� ��ߵ��������ݲ�������
-	�ұ� ������С�� 
-	��Ҫ��֤�����ѵ����ݲ����1 ���������� ż��������С���У�
-	��Ҫ��֤ �� ��ѵ���������С��С�ѵ��������ݣ�
-	�� ���������ѵ����� ����С�ѵ�����һ����ʱ��
-	�Ȳ����ѣ�����Ѷ�����ɾ��������С�ѡ�
+	64.数据流中的中位数
+	利用 最大堆 和 最小堆
+	中位数 左边的所有数据插入最大堆
+	右边 插入最小堆 
+	（要保证两个堆的数据差不大于1 数据总量是 偶数，插入小堆中，
+	还要保证 ： 大堆的所有数据小于小堆的所有数据）
+	当 即将插入大堆的数据 大于小堆的任意一个数时：
+	先插入大堆，将大堆顶的数删除并插入小堆。
 */
 
 template<typename T>
@@ -225,9 +225,9 @@ class DynamicArray
 public:
 	void insert(T num)
 	{
-		if (((min.size() + max.size()) & 1) == 0)  //��ż��ʱ������С��
+		if (((min.size() + max.size()) & 1) == 0)  //当偶数时，插入小堆
 		{
-			if (max.size() > 0 && num < max[0])	//������ "С�ѵ��� �� ����еĴ�"
+			if (max.size() > 0 && num < max[0])	//不满足 "小堆的数 比 大堆中的大"
 			{
 				max.push_back(num);
 				push_heap(max.begin(),max.end(),less<T>());
@@ -280,23 +280,23 @@ private:
 
 
 /*
-	65.�������ڵ����ֵ
-	{2,3,4,2,6,2,5,1}  һ������6���������ڣ����ڴ�С3
-	��  ���ֵ	{4,4,6,6,6,5}
+	65.滑动窗口的最大值
+	{2,3,4,2,6,2,5,1}  一共存在6个滑动窗口，窗口大小3
+	则  最大值	{4,4,6,6,6,5}
 
-	˼·������ deque
-	2����ʱ�򣬴�����У�
-	3 ��2�� ������3 ɾ��2
-	4 ͬ��
+	思路：利用 deque
+	2来的时候，存入队列，
+	3 比2大 ，存入3 删除2
+	4 同上
 
-	2��4С����4�������� ��2 ���п��ܳ�Ϊ������� 2 ���β������4����ͷ��
-	6 �� 2��4�� ɾ�� 2��4 ����6
-	2 �� 6С�����β
-	5 �� 2 �󣬱�6С��ɾ�� 2 ��5 ���β
-	1 ����ʱ��Ӧ��ɾ��6 
+	2比4小，当4滑出窗口 ，2 还有可能成为最大，所以 2 存队尾，最大的4还在头部
+	6 比 2，4大 删除 2和4 存入6
+	2 比 6小，存队尾
+	5 比 2 大，比6小。删除 2 ，5 存队尾
+	1 来的时候，应该删除6 
 
-	���֪�������Ƿ�Ӧ�ð���һ������
-	���� Ӧ�ô��� �±꣬�������±�Ĳ�ֵ���ڴ��ڴ�С��ɾ��֮ǰ���±�
+	如何知道窗口是否应该包含一个数，
+	队列 应该存入 下标，当两个下标的差值大于窗口大小，删除之前的下标
 
 */
 
@@ -333,8 +333,69 @@ vector<int> maxInWindows(vector<int>& num, size_t sizeOfWindows)
 }
 
 
+/*
+	66 矩阵中的路径
+*/
 
-/**************** ���ֲ������� **********************/
+bool hasPathCore(char*matrix, int rows, int cols, int row, int col, char* str, int& length, bool* visited);
+
+bool hasPath(char* matrix, int rows, int cols, char* str)
+{
+	if (matrix == NULL || rows <= 0 || cols <= 0 || str == NULL)
+		return false;
+
+	//定义布尔值矩阵，标识路径是否进入每个格子
+	bool * visit = new bool[rows*cols];
+	memset(visit, 0, rows*cols);
+
+	int path = 0;
+	for (int row = 0; row < rows; ++row)
+	{
+		for (int col = 0; col < cols; ++col)
+			if (hasPathCore(matrix, rows, cols, row, col, str, path, visit))
+				return true;
+	}
+
+	delete[] visit;
+	return false;
+}
+
+
+bool hasPathCore(char*matrix, int rows, int cols, int row, int col, char* str, int& length, bool* visited)
+{
+	if (str[length] == '\0')
+		return true;
+
+	bool hasPath = false;
+
+	if (row >= 0 && row < rows && col>0 && col < cols
+		&& matrix[row*cols + col] == str[length] && !visited[row*cols + col])
+	{
+		++length;
+		visited[row*cols + col] = true;
+
+		hasPath = hasPathCore(matrix, rows, cols, row, col - 1, str, length, visited)
+			   || hasPathCore(matrix, rows, cols, row - 1, col, str, length, visited)
+			   || hasPathCore(matrix, rows, cols, row, col + 1, str, length, visited)
+			   || hasPathCore(matrix, rows, cols, row + 1, col , str, length, visited);
+
+		if (!hasPath)
+		{
+			--length;
+			visited[row*cols + col] = false;
+		}
+	}
+	return hasPath;
+}
+
+/**************** 部分测试用例 **********************/
+void TestHasPath()
+{
+	char* ar1 = "abcesfcsadee";
+	char* str = "bcced";
+
+	cout << hasPath(ar1,3, 4, str) << endl;
+}
 
 
 
@@ -362,9 +423,9 @@ void TestPrint()
 	root->_right->_left = new BinTree(9, NULL, NULL);
 	root->_right->_right = new BinTree(11, NULL, NULL);
 
-	Print(root);		//���ӡ
-	Print_(root);		//֮ ��״��ӡ
+	Print(root);		//层打印
+	Print_(root);		//之 形状打印
 
 	size_t k = 4;
-	cout << KthNodeCore(root, k)->_data << endl; //������������k��
+	cout << KthNodeCore(root, k)->_data << endl; //二叉搜索树第k大
 }
