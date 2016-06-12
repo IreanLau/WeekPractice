@@ -388,7 +388,82 @@ bool hasPathCore(char*matrix, int rows, int cols, int row, int col, char* str, i
 	return hasPath;
 }
 
+/*
+	机器人的运动范围
+
+	m*n的方格矩阵，一个机器人从(0,0)开始，
+	每次可以左右上下移动一格，但不能进入行坐标和列左边的数位之和大于k的格子
+
+	例如当k为18时，能进入(35,37)
+	3+5+3+7=18
+
+	不能进入(35,38)
+	3+5+3+8=19
+
+	求能到达多少个格子
+
+
+	思路：
+		从(0,0)开始，当准备进入(i,j)时，通过检查坐标的数位来判断是否能进入
+
+		典型的回溯法
+*/
+
+//判断 机器能否进入(row,col)的方格
+bool check(int threshold, int rows, int cols, int row, int col, bool*visited);
+
+int movingCountCore(int threshold, int rows, int cols, int row, int col, bool* visited);
+
+int moving(int threshold, int rows, int cols)
+{
+	bool* visited = new bool[rows*cols];
+	for (int i = 0; i < rows*cols; ++i)
+		visited[i] = false;
+
+	int count = movingCountCore(threshold,rows,cols,0,0,visited);
+	delete[]visited;
+	return count;
+}
+
+int movingCountCore(int threshold, int rows, int cols, int row, int col, bool* visited)
+{
+	int count = 0;
+	if (check(threshold, rows, cols, row, col, visited))
+	{
+		visited[row*cols + col] = true;
+		count = 1 + movingCountCore(threshold, rows, cols, row - 1, col, visited)
+			+ movingCountCore(threshold, rows, cols, row, col - 1, visited)
+			+ movingCountCore(threshold, rows, cols, row + 1, col, visited)
+			+ movingCountCore(threshold, rows, cols, row, col + 1, visited);
+	}
+	return count;
+}
+
+int DigitSum(int n)
+{
+	if (n < 10)
+		return n;
+	else
+		return n % 10 + DigitSum(n / 10);
+}
+
+bool check(int threshold, int rows, int cols, int row, int col, bool*visited)
+{
+	if (row >= 0 && row < rows && col >= 0 && col < cols
+		&& DigitSum(row) + DigitSum(col) <= threshold
+		&& !visited[row*cols + col])
+		return true;
+	return false;
+}
+
+
+
 /**************** 部分测试用例 **********************/
+void TestMoving()
+{
+	cout << moving(18,5,8) << endl;
+}
+
 void TestHasPath()
 {
 	char* ar1 = "abcesfcsadee";
