@@ -22,14 +22,14 @@ void show(Node* pBeign)
 }
 
 /*
-15.Á´±íµÄµ¹ÊıµÚk¸ö½Úµã
+15.é“¾è¡¨çš„å€’æ•°ç¬¬kä¸ªèŠ‚ç‚¹
 */
 
 Node* _FindTailKpos(Node* pBegin, size_t K)
 {
 	if (pBegin == NULL || K == 0)
 	{
-		cout << "error argc! proc will exit" << endl;		//²ÎÊı³ö´í
+		cout << "error argc! proc will exit" << endl;		//å‚æ•°å‡ºé”™
 		exit(1);
 	}	
 
@@ -58,7 +58,7 @@ Node* _FindTailKpos(Node* pBegin, size_t K)
 
 
 /*
-	16.ÄæÖÃµ¥Á´±í
+	16.é€†ç½®å•é“¾è¡¨
 */
 
 void Reverse(Node* &pBegin)
@@ -82,7 +82,7 @@ void Reverse(Node* &pBegin)
 
 
 /*
-	17.ºÏ²¢Á½¸öÓĞĞòÁ´±í
+	17.åˆå¹¶ä¸¤ä¸ªæœ‰åºé“¾è¡¨
 */
 
 Node* MergeTwoList(Node* pBegin1, Node* pBegin2)
@@ -117,7 +117,7 @@ struct BinTree
 };
 
 /*
-	18.Ê÷µÄ×Ó½á¹¹
+	18.æ ‘çš„å­ç»“æ„
 */
 bool DoseTree1HasTree2(BinTree* root1, BinTree* root2)
 {
@@ -139,17 +139,17 @@ bool HasSubTree(BinTree* root1, BinTree* root2)
 	if (root1 != NULL && root2 != NULL)
 	{
 		if (root1->m_nValue == root2->m_nValue)
-			res = DoseTree1HasTree2(root1, root2);			//Èç¹ûÖµÏàµÈ ÏÈ´Óµ±Ç°½áµãÅĞ¶Ï
+			res = DoseTree1HasTree2(root1, root2);			//å¦‚æœå€¼ç›¸ç­‰ å…ˆä»å½“å‰ç»“ç‚¹åˆ¤æ–­
 		if (!res)
-			res = HasSubTree(root1->m_pLeft, root2);		//Ã»ÓĞ£¬µİ¹éÅĞ¶Ï ×óÊ÷
+			res = HasSubTree(root1->m_pLeft, root2);		//æ²¡æœ‰ï¼Œé€’å½’åˆ¤æ–­ å·¦æ ‘
 		if (!res)
-			res = HasSubTree(root1->m_pLeft, root2);		//ÓÒÊ÷
+			res = HasSubTree(root1->m_pLeft, root2);		//å³æ ‘
 	}
 	return res;
 }
 
 /*
-	19.¶ş²æÊ÷µÄ¾µÏñ
+	19.äºŒå‰æ ‘çš„é•œåƒ
 */
 void MirrorTree(BinTree*& pNode)
 {
@@ -169,30 +169,30 @@ void MirrorTree(BinTree*& pNode)
 }
 
 /*
-	20.Ë³Ğò´òÓ¡¾ØÕó
+	20.é¡ºåºæ‰“å°çŸ©é˜µ
 */
 void printMatrix(vector<vector<int> > matrix)
 {
 	vector<int>res;
 	res.clear();
 
-	int row = matrix.size();		//ĞĞÊı
-	int col = matrix[0].size();		//ÁĞÊı
+	int row = matrix.size();		//è¡Œæ•°
+	int col = matrix[0].size();		//åˆ—æ•°
 
-	int circle = ((row < col ? row : col) - 1) / 2 + 1;//È¦Êı
+	int circle = ((row < col ? row : col) - 1) / 2 + 1;//åœˆæ•°
 	cout << "circle:>	" <<circle <<endl;
 	for (int start = 0; start <= circle; ++start)
 	{
-		//×ó->ÓÒ
+		//å·¦->å³
 		for (int i = start; i < col-start; ++i)
 			res.push_back(matrix[start][i]);
-		//ÉÏ->ÏÂ
+		//ä¸Š->ä¸‹
 		for (int i = start + 1; i < row - start; ++i)
 			res.push_back(matrix[i][col -start-1]);
-		//ÓÒ->×ó
+		//å³->å·¦
 		for (int i = col - start - 2; (i >= start) && (start * 2 + 1 < row); --i)
 			res.push_back(matrix[row - start - 1][i]);
-		//ÏÂ->ÉÏ
+		//ä¸‹->ä¸Š
 		for (int i = row - start - 2; (i > start) && (start * 2 + 1 < col); --i)
 			res.push_back(matrix[i][start]);
 	}
@@ -203,7 +203,7 @@ void printMatrix(vector<vector<int> > matrix)
 
 
 /*
-	°üº¬minµÄÕ»
+	åŒ…å«minçš„æ ˆ
 */
 
 template<class T>
@@ -227,11 +227,11 @@ public:
 
 	void Push(const T& val)
 	{
-		_stack.push(val);
 		if (_stack.empty() || val<=_min.top())
 			_min.push(val);
 		else
 			_min.push(_min.top());
+		_stack.push(val);
 	}
 private:
 	stack<T> _stack;
@@ -239,7 +239,7 @@ private:
 };
 
 /************************************************************************/
-/* ²¿·Ö²âÊÔÓÃÀıÈçÏÂ                                                     */
+/* éƒ¨åˆ†æµ‹è¯•ç”¨ä¾‹å¦‚ä¸‹                                                     */
 /************************************************************************/
 void TestFindTailKpos()
 {
@@ -259,19 +259,19 @@ void TestFindTailKpos()
 
 
 	Node*cur = _FindTailKpos(a, 4);
-	//cout << "µ¹ÊıµÚ4¸ö£º¡· " << cur->key << endl;
+	//cout << "å€’æ•°ç¬¬4ä¸ªï¼šã€‹ " << cur->key << endl;
 
 	//cur = _FindTailKpos(a, 1);
-	//cout << "µ¹ÊıµÚ1¸ö£º¡· " << cur->key << endl;
+	//cout << "å€’æ•°ç¬¬1ä¸ªï¼šã€‹ " << cur->key << endl;
 
 	//cur = _FindTailKpos(a, 0);
-	//cout << "µ¹ÊıµÚ0¸ö£º¡· " << cur->key << endl;
+	//cout << "å€’æ•°ç¬¬0ä¸ªï¼šã€‹ " << cur->key << endl;
 
 	cur = _FindTailKpos(a, 8);
-	cout << "µ¹ÊıµÚ8¸ö£º¡· " << cur->key << endl;
+	cout << "å€’æ•°ç¬¬8ä¸ªï¼šã€‹ " << cur->key << endl;
 
 	cur = _FindTailKpos(a, 9);
-	cout << "µ¹ÊıµÚ9¸ö£º¡· " << cur->key << endl;
+	cout << "å€’æ•°ç¬¬9ä¸ªï¼šã€‹ " << cur->key << endl;
 	cout << endl;
 }
 
