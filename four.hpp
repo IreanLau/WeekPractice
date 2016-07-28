@@ -1,10 +1,10 @@
 #pragma once
 
 /*
-	22.Õ»µÄÑ¹Èëµ¯³öË³Ğò
+	22.æ ˆçš„å‹å…¥å¼¹å‡ºé¡ºåº
 	push: 1 2 3 4 5
-	pop : 4 5 3 2 1 ¡Ì
-	pop	: 4 3 5 2 1 ¡Á
+	pop : 4 5 3 2 1 âˆš
+	pop	: 4 3 5 2 1 Ã—
 */
 
 template<class T>
@@ -30,7 +30,7 @@ bool stackPopOrder(vector<T> push, vector<T> pop)
 
 
 /*
-	23.²ãĞò±éÀú¶ş²æÊ÷
+	23.å±‚åºéå†äºŒå‰æ ‘
 */
 struct BinTree
 {
@@ -67,15 +67,15 @@ void printTree(BinTree* &pRoot)
 }
 
 /*
-	24.¶ş²æËÑË÷Ê÷ºóĞò±éÀú
-	ÊäÈëÒ»¸öÊı×éÅĞ¶ÏÊÇ²»ÊÇBSTµÄºóĞø±éÀú
+	24.äºŒå‰æœç´¢æ ‘ååºéå†
+	è¾“å…¥ä¸€ä¸ªæ•°ç»„åˆ¤æ–­æ˜¯ä¸æ˜¯BSTçš„åç»­éå†
 
-	Ë¼Â·£º
-	ÈôÕıÈ·£¬¸ÃÊı×éµÄ×îºóÒ»¸öÔªËØÊÇ root½Úµã
-	Ç°ÃæµÄÔªËØ±»·ÖÎªÁ½²¿·Ö£¬Ò»²¿·ÖĞ¡ÓÚroot£¨×ó×ÓÊ÷£©
-	ÁíÒ»²¿·Ö´óÓÚroot£¨ÓÒ×ÓÊ÷£©
+	æ€è·¯ï¼š
+	è‹¥æ­£ç¡®ï¼Œè¯¥æ•°ç»„çš„æœ€åä¸€ä¸ªå…ƒç´ æ˜¯ rootèŠ‚ç‚¹
+	å‰é¢çš„å…ƒç´ è¢«åˆ†ä¸ºä¸¤éƒ¨åˆ†ï¼Œä¸€éƒ¨åˆ†å°äºrootï¼ˆå·¦å­æ ‘ï¼‰
+	å¦ä¸€éƒ¨åˆ†å¤§äºrootï¼ˆå³å­æ ‘ï¼‰
 	
-	µİ¹éÅĞ¶Ï×óÓÒ
+	é€’å½’åˆ¤æ–­å·¦å³
 */
 
 bool lastOrderOfBST(int ar[], int len)
@@ -91,7 +91,7 @@ bool lastOrderOfBST(int ar[], int len)
 			break;
 
 	int rightEndIndex = leftEndIndex;
-	for (; rightEndIndex < len - 1; ++rightEndIndex)	//ÓÒÇø¼äÔªËØĞ¡ÓÚroot·Ç·¨
+	for (; rightEndIndex < len - 1; ++rightEndIndex)	//å³åŒºé—´å…ƒç´ å°äºrootéæ³•
 		if (ar[rightEndIndex] < root)
 			return false;
 
@@ -107,7 +107,7 @@ bool lastOrderOfBST(int ar[], int len)
 }
 
 /*
-	25.´òÓ¡¶ş²æÊ÷ÖĞºÍÎªÖ¸¶¨ÖµµÄÂ·¾¶
+	25.æ‰“å°äºŒå‰æ ‘ä¸­å’Œä¸ºæŒ‡å®šå€¼çš„è·¯å¾„
 
 */
 
@@ -116,7 +116,7 @@ vector<int> tmp;
 
 void find(BinTree* node, int expectNumber)
 {
-	//Èç¹ûÊÇÒ¶×Ó½Úµã£¬»ò²îÖµµÈÓÚµ±Ç°½áµãÖµ£¬pushµ½¶şÎ¬Êı×é
+	//å¦‚æœæ˜¯å¶å­èŠ‚ç‚¹ï¼Œæˆ–å·®å€¼ç­‰äºå½“å‰ç»“ç‚¹å€¼ï¼Œpushåˆ°äºŒç»´æ•°ç»„
 	tmp.push_back(node->_data);
 	if (expectNumber - node->_data == 0 && !node->_left && !node->_right) 
 		res.push_back(tmp);
@@ -126,7 +126,7 @@ void find(BinTree* node, int expectNumber)
 		if (node->_left)find(node->_left, expectNumber - node->_data);
 		if (node->_right)find(node->_right, expectNumber - node->_data);
 	}
-	tmp.pop_back(); //²»ºÏ·¨£¬½«µ±Ç°½áµãµÄÖµ¼õÈ¥
+	tmp.pop_back(); //ä¸åˆæ³•ï¼Œå°†å½“å‰ç»“ç‚¹çš„å€¼å‡å»
 }
 
 vector<vector<int> > FindPath(BinTree* root, int expectNumber)
@@ -137,19 +137,19 @@ vector<vector<int> > FindPath(BinTree* root, int expectNumber)
 
 /*
 	26.
-	¸´ÔÓÁ´±íµÄ¸´ÖÆ
-	Ã¿¸ö½ÚµãÓĞÁ½ÈËÖ¸ÕëÓò£º
-	pNextÖ¸ÏòÏÂÒ»¸ö½Úµã
-	pSiblingÖ¸ÏòËæ»ú½Úµã
+	å¤æ‚é“¾è¡¨çš„å¤åˆ¶
+	æ¯ä¸ªèŠ‚ç‚¹æœ‰ä¸¤äººæŒ‡é’ˆåŸŸï¼š
+	pNextæŒ‡å‘ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
+	pSiblingæŒ‡å‘éšæœºèŠ‚ç‚¹
 
-	Ë¼Â·£º
-	1.ÔÚÔ­½Úµãºó¸´ÖÆ¿ËÂ¡½Úµã£¨¸´ÖÆpNext£©
-	2.¸´ÖÆpSibling
-	3.¶Ï¿ªÁ¬½Ó£¬·µ»ØĞÂ½ÚµãµÄÍ·²¿
+	æ€è·¯ï¼š
+	1.åœ¨åŸèŠ‚ç‚¹åå¤åˆ¶å…‹éš†èŠ‚ç‚¹ï¼ˆå¤åˆ¶pNextï¼‰
+	2.å¤åˆ¶pSibling
+	3.æ–­å¼€è¿æ¥ï¼Œè¿”å›æ–°èŠ‚ç‚¹çš„å¤´éƒ¨
 */
 struct ComplexListNode
 {
-	int					_data;
+	int			_data;
 	ComplexListNode*	_pNext;
 	ComplexListNode*	_pSlibling;
 
@@ -200,7 +200,7 @@ ComplexListNode* disConnection(ComplexListNode* &pHead)
 	if(NULL != pCur)
 	{
 		newHead = pClone = pCur->_pNext;
-		pCur->_pNext = pClone->_pNext;		//µ±Ç°½áµãµÄnextÖ¸Ïò¿ËÂ¡½ÚµãµÄnext
+		pCur->_pNext = pClone->_pNext;		//å½“å‰ç»“ç‚¹çš„nextæŒ‡å‘å…‹éš†èŠ‚ç‚¹çš„next
 		pCur = pCur->_pNext;
 	}
 
@@ -215,9 +215,9 @@ ComplexListNode* disConnection(ComplexListNode* &pHead)
 }
 
 /*
-	27.BST×ªÓĞĞòË«ÏòÁ´±í
-	Ë¼Â·£º Ä³½ÚµãµÄleft×÷ÎªÇ°ÇıÖ¸Õë£¬Ö¸Ïò×óÊ÷ÖĞ×î´óµÄ½Úµã
-				   right×÷Îªºó¼ÌÖ¸Õë£¬Ö¸ÏòÓÒÊ÷ÖĞ×îĞ¡µÄ½Úµã
+	27.BSTè½¬æœ‰åºåŒå‘é“¾è¡¨
+	æ€è·¯ï¼š æŸèŠ‚ç‚¹çš„leftä½œä¸ºå‰é©±æŒ‡é’ˆï¼ŒæŒ‡å‘å·¦æ ‘ä¸­æœ€å¤§çš„èŠ‚ç‚¹
+				   rightä½œä¸ºåç»§æŒ‡é’ˆï¼ŒæŒ‡å‘å³æ ‘ä¸­æœ€å°çš„èŠ‚ç‚¹
 	struct BinTree
 	{
 	int _data;
@@ -276,7 +276,7 @@ BinTree* Conver(BinTree* &pRoot)
 }
 
 /*
-	28.×Ö·û´®ÅÅÁĞ
+	28.å­—ç¬¦ä¸²æ’åˆ—
 	a b c:>
 	abc acb bac bca cab cba
 */
@@ -303,7 +303,7 @@ void Permutation(char* str)
 		return;
 	Permutation(str, str);
 }
-/*********************** ²¿·Ö²âÊÔÓÃÀı ******************************/
+/*********************** éƒ¨åˆ†æµ‹è¯•ç”¨ä¾‹ ******************************/
 
 void Test()
 {
