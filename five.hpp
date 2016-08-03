@@ -446,7 +446,7 @@ int InversePairs(vector<int> d)
 	int r = 0;
 	for (int i = 0; i < d.size(); ++i) {
 		for (int j = 0; j < i; ++j) 
-			if (d[j] > d[i]) ++r;
+			if (d[j] > d[j+1]) ++r;
 	}
 	return r;
 }
