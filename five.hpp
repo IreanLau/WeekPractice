@@ -2,19 +2,19 @@
 
 
 /*
-ÃæÊÔÖĞÓöµ½µÄÒ»µÀÌâ£º
+é¢è¯•ä¸­é‡åˆ°çš„ä¸€é“é¢˜ï¼š
 
-ÅĞ¶ÏÒ»¸öÕı³£×Ö·û´®ÊÇ·ñÆ¥ÅäÒ»¸ö±í´ïÊ½×Ö·û´®
-, ±í´ïÊ½×Ö·û´®ÀïµÄ*º¬Òå±È½ÏÌØÊâ£¬
-*Æ¥ÅäÈÎÒâÊıÄ¿×Ö·û(°üÀ¨Áã¸ö×Ö·û)¡£
-±ÈÈçaa1123ddefÆ¥Åä aa*123*def¡£
+åˆ¤æ–­ä¸€ä¸ªæ­£å¸¸å­—ç¬¦ä¸²æ˜¯å¦åŒ¹é…ä¸€ä¸ªè¡¨è¾¾å¼å­—ç¬¦ä¸²
+, è¡¨è¾¾å¼å­—ç¬¦ä¸²é‡Œçš„*å«ä¹‰æ¯”è¾ƒç‰¹æ®Šï¼Œ
+*åŒ¹é…ä»»æ„æ•°ç›®å­—ç¬¦(åŒ…æ‹¬é›¶ä¸ªå­—ç¬¦)ã€‚
+æ¯”å¦‚aa1123ddefåŒ¹é… aa*123*defã€‚
 bool isMatch(const char* regular,const char* dest);
-²ÎÊıËµÃ÷£ºregularÎª±í´ïÊ½×Ö·û´®£¬destÎªÕı³£×Ö·û´®¡£·µ»ØÖµ£º
-Æ¥Åä·µ»Øture£¬²»Æ¥Åä·µ»Øfalse¡£
+å‚æ•°è¯´æ˜ï¼šregularä¸ºè¡¨è¾¾å¼å­—ç¬¦ä¸²ï¼Œdestä¸ºæ­£å¸¸å­—ç¬¦ä¸²ã€‚è¿”å›å€¼ï¼š
+åŒ¹é…è¿”å›tureï¼Œä¸åŒ¹é…è¿”å›falseã€‚
 
-Ë¼Â·£º ½èÖúKMP Ëã·¨£¬
-Èç¹û£º ±»¡®*¡¯·Ö¸î¿ªµÄ²¿·Ö£¬¶¼ÊÇÄ¿±ê´®µÄ×Ö´®
-¼´¿É
+æ€è·¯ï¼š å€ŸåŠ©KMP ç®—æ³•ï¼Œ
+å¦‚æœï¼š è¢«â€˜*â€™åˆ†å‰²å¼€çš„éƒ¨åˆ†ï¼Œéƒ½æ˜¯ç›®æ ‡ä¸²çš„å­—ä¸²
+å³å¯
 */
 
 
@@ -26,7 +26,7 @@ void getNext(char* p, int *next)
 	int slow = -1;
 	int fast = 0;
 
-	while (fast < strlen(p) - 1)		//ÏÂ±ê0ÒÑ¾­Ê¹ÓÃ
+	while (fast < strlen(p) - 1)		//ä¸‹æ ‡0å·²ç»ä½¿ç”¨
 	{
 		if (slow == -1 || p[slow] == p[fast])
 		{
@@ -69,10 +69,10 @@ int KMP(char* s, char* p)
 }
 
 
-//aa1123ddef	Æ¥Åä	aa*123*def¡£
+//aa1123ddef	åŒ¹é…	aa*123*defã€‚
 /*
-aa ÔÚ aa1123ddefÖĞÆ¥Åäºó
-123 ÔÚ 1123ddefÆ¥Åä
+aa åœ¨ aa1123ddefä¸­åŒ¹é…å
+123 åœ¨ 1123ddefåŒ¹é…
 */
 bool isMatch(const char* regular, const char* dest)
 {
@@ -104,13 +104,13 @@ bool isMatch(const char* regular, const char* dest)
 
 
 /*
-	29.Êı×éÖĞ³¬¹ıÒ»°ëµÄÊı
+	29.æ•°ç»„ä¸­è¶…è¿‡ä¸€åŠçš„æ•°
 
-	³£¹æ½â·¨£º
-	ÅÅĞò£¬·µ»ØÊı×éÖĞ¼äµÄÊı
+	å¸¸è§„è§£æ³•ï¼š
+	æ’åºï¼Œè¿”å›æ•°ç»„ä¸­é—´çš„æ•°
 
 	1 2 3 3 4 3 2 3 3 
-	O£¨n£© ¼ÆÊı£º ÏàÍ¬+1£¬²»Í¬-1  
+	Oï¼ˆnï¼‰ è®¡æ•°ï¼š ç›¸åŒ+1ï¼Œä¸åŒ-1  
 */
 
 bool check(int ar[], int len, int num)
@@ -150,9 +150,9 @@ int MoreThanHalfNum(int ar[],int len)
 }
 
 /*
-	30.×îĞ¡µÄk¸öÊı
-	O(n)µÄ½â·¨£º ÀûÓÃ¿ìÅÅµÄpartionº¯Êı·Ö¸ô
-	µ«²»Ò»¶¨ÓĞĞò	¶øÇÒ¸Ä±äÔ­ÓĞÊı×é
+	30.æœ€å°çš„kä¸ªæ•°
+	O(n)çš„è§£æ³•ï¼š åˆ©ç”¨å¿«æ’çš„partionå‡½æ•°åˆ†éš”
+	ä½†ä¸ä¸€å®šæœ‰åº	è€Œä¸”æ”¹å˜åŸæœ‰æ•°ç»„
 */
 int partion(int* ar,  int begin, int end)
 {
@@ -187,7 +187,7 @@ void getLeastNum(int* input, int len, int* output, int k)
 	int begin = 0;
 	int end = len - 1;
 
-	int part = partion(input,begin,end);			//·µ»Ø·Ö¸ôµÄÏÂ±ê
+	int part = partion(input,begin,end);			//è¿”å›åˆ†éš”çš„ä¸‹æ ‡
 	while (part != k - 1)
 	{
 		if (part > k - 1)
@@ -205,7 +205,7 @@ void getLeastNum(int* input, int len, int* output, int k)
 		output[i] = input[i];
 }
 
-/*		½â·¨2 ÀûÓÃ Ã°ÅİµÄË¼Ïë O(n*k),¸Ä±äÊı×é	*/
+/*		è§£æ³•2 åˆ©ç”¨ å†’æ³¡çš„æ€æƒ³ O(n*k),æ”¹å˜æ•°ç»„	*/
 
 vector<int> getLeastNumWithBubble(vector<int>input, int k)
 {
@@ -224,9 +224,9 @@ vector<int> getLeastNumWithBubble(vector<int>input, int k)
 	return res;
 }
 /*
-	½â·¨3£º
-		×î´ó¶Ñ£ºO(nlg^k)	²»»á¸Ä±äÔ­ÓĞÊı×é£¬ÊÊºÏº£Á¿Êı¾İ´¦Àí
-		ÕâÀïÀûÓÃ set£¬µ«ÊÇ set»áÈ¥ÖØ¸´£¬Ê¹ÓÃmultiset½â¾ö
+	è§£æ³•3ï¼š
+		æœ€å¤§å †ï¼šO(nlg^k)	ä¸ä¼šæ”¹å˜åŸæœ‰æ•°ç»„ï¼Œé€‚åˆæµ·é‡æ•°æ®å¤„ç†
+		è¿™é‡Œåˆ©ç”¨ setï¼Œä½†æ˜¯ setä¼šå»é‡å¤ï¼Œä½¿ç”¨multisetè§£å†³
 */
 vector<int> getLeastNumWithHeap(vector<int>input, int k)
 {
@@ -247,8 +247,8 @@ vector<int> getLeastNumWithHeap(vector<int>input, int k)
 }
 
 /*
-	31.Á¬Ğø×ÓÊı×é×î´óºÍ
-	1£¬-2£¬3£¬10£¬-4£¬7£¬2£¬-5
+	31.è¿ç»­å­æ•°ç»„æœ€å¤§å’Œ
+	1ï¼Œ-2ï¼Œ3ï¼Œ10ï¼Œ-4ï¼Œ7ï¼Œ2ï¼Œ-5
 */
 /*O(n)*/
 int GetSum(int *ar, int len)
@@ -272,9 +272,9 @@ int GetSum(int *ar, int len)
 }
 
 /*
-	32. 1~nÖĞ '1'³öÏÖµÄ´ÎÊı
+	32. 1~nä¸­ '1'å‡ºç°çš„æ¬¡æ•°
 */
-/*Çî¾Ù·¨ Ê±¼ä¸´ÔÓ¶È½öºÍÊı×ÖµÄÎ»ÊıÓĞ¹ØÏµ£¬ O(n*log^n)*/
+/*ç©·ä¸¾æ³• æ—¶é—´å¤æ‚åº¦ä»…å’Œæ•°å­—çš„ä½æ•°æœ‰å…³ç³»ï¼Œ O(n*log^n)*/
 
 int numOf1(int n)
 {
@@ -298,17 +298,17 @@ int numOf1ToN(int n)
 
 
 /*
-	ÊıÑ§Ö¤Ã÷·¨
+	æ•°å­¦è¯æ˜æ³•
 	https://leetcode.com/discuss/44281/4-lines-o-log-n-c-java-python
-	ÀıÈç£º 3141592
-	·Ö³É a:3141  b:592£¬´ËÊ± m=1000
-	ÒÔaµÄ×îµÍÎ»È¡ÖµÌÖÂÛ  
-	×îµÍÎ»Îª 0, 1 ºÍ >=2
-	0,1Ê± (n / m % 10 == 1) * (n%m + 1) 
-				µ±×îµÍÎ»0£º  592È¡²»µ½
-				Îª1£º		¼´ 1000 ~ 1592 ¹² (592+1)
-	·ñÔò£º (n / m + 8) / 10 * m
-				µ± m==1000Ê±, ÖØ¸´¼ÆËã ÒÔ'1000'×÷ÎªÄ£Ê½ µÄ [a +(×îµÍÎ»>=2)]´Î  
+	ä¾‹å¦‚ï¼š 3141592
+	åˆ†æˆ a:3141  b:592ï¼Œæ­¤æ—¶ m=1000
+	ä»¥açš„æœ€ä½ä½å–å€¼è®¨è®º  
+	æœ€ä½ä½ä¸º 0, 1 å’Œ >=2
+	0,1æ—¶ (n / m % 10 == 1) * (n%m + 1) 
+				å½“æœ€ä½ä½0ï¼š  592å–ä¸åˆ°
+				ä¸º1ï¼š		å³ 1000 ~ 1592 å…± (592+1)
+	å¦åˆ™ï¼š (n / m + 8) / 10 * m
+				å½“ m==1000æ—¶, é‡å¤è®¡ç®— ä»¥'1000'ä½œä¸ºæ¨¡å¼ çš„ [a +(æœ€ä½ä½>=2)]æ¬¡  
 */
 int NumberOf1Between1AndN(int n) 
 {
@@ -320,12 +320,16 @@ int NumberOf1Between1AndN(int n)
 }
 
 /*
-	33. Êı×éÅÅÁĞ³É×îĞ¡µÄÊı£º
+	33. æ•°ç»„æ’åˆ—æˆæœ€å°çš„æ•°ï¼š
 	{3,32,321}	->	321323
 
-	Ë¼Â·£º×ª³É×Ö·û´®£¬
-	¼ÙÉèÓĞÁ½¸öÊı×Ö×Ö·û´® a,b
-	±È½Ï ab,baµÄ´óĞ¡
+	æ€è·¯ï¼šè½¬æˆå­—ç¬¦ä¸²ï¼Œ
+	å‡è®¾æœ‰ä¸¤ä¸ªæ•°å­—å­—ç¬¦ä¸² a,b
+	æ¯”è¾ƒ ab,baçš„å¤§å°
+	
+	å°†vector<int>{3,32,31}
+	æ ¼å¼åŒ–æ‰“å…¥ vector<string>ä¸­
+	åˆ©ç”¨æŒ‡å®šçš„compareå‡½æ•°è¿›è¡Œsort
 */
 const int g_maxSize = 10;
 
@@ -346,7 +350,7 @@ void printMin(vector<int> numbers)
 	if (numbers.size() <= 0)
 		return;
 
-	vector<string> strNum;							//°Ñvector<int>×ª»¯Îªvector<string>
+	vector<string> strNum;							//æŠŠvector<int>è½¬åŒ–ä¸ºvector<string>
 	for (int i = 0; i < numbers.size(); ++i)
 	{
 		char* Ins =new char[g_maxSize+1];
@@ -362,11 +366,11 @@ void printMin(vector<int> numbers)
 
 
 /*
-	34.Êä³öµÚn¸ö³óÊı
-	³óÊı£¨°üº¬2,3,5Òò×ÓµÄÊı£©
-	O(n)µÄ½â·¨
+	34.è¾“å‡ºç¬¬nä¸ªä¸‘æ•°
+	ä¸‘æ•°ï¼ˆåŒ…å«2,3,5å› å­çš„æ•°ï¼‰
+	O(n)çš„è§£æ³•
 
-	1 Ï°¹ß±»µ±×÷µÚÒ»¸ö³óÊı
+	1 ä¹ æƒ¯è¢«å½“ä½œç¬¬ä¸€ä¸ªä¸‘æ•°
 */
 int Min(int a, int b, int c)
 {
@@ -406,10 +410,10 @@ int GetUglyNumber(int index)
 }
 
 /*
-	35.µÚÒ»¸öÖ»³öÏÖÒ»¸öµÄ×Ö·û
+	35.ç¬¬ä¸€ä¸ªåªå‡ºç°ä¸€ä¸ªçš„å­—ç¬¦
 	abaccdeff  :-> b
 */
-//	abbcad ÕÒµÚÒ»¸ö²»ÖØ¸´(ÖØ¸´)µÄ
+//	abbcad æ‰¾ç¬¬ä¸€ä¸ªä¸é‡å¤(é‡å¤)çš„
 //*/
 char findFirstNoRepeat(string A, int n)
 {
@@ -434,9 +438,9 @@ char findFirstReplace(string A, int n)
 }
 
 /*
-	36.Êı×éÖĞµÄÄæĞò¶Ô
+	36.æ•°ç»„ä¸­çš„é€†åºå¯¹
 */
-/*O(n^2)µÄ½â·¨£¨Ã°Åİ£©£º Ò»µ©Ç°ÃæµÄ´óÓÚºóÃæµÄ£¬Ôò¼ÆÊı*/
+/*O(n^2)çš„è§£æ³•ï¼ˆå†’æ³¡ï¼‰ï¼š ä¸€æ—¦å‰é¢çš„å¤§äºåé¢çš„ï¼Œåˆ™è®¡æ•°*/
 int InversePairs(vector<int> d)
 {
 	int r = 0;
@@ -447,7 +451,7 @@ int InversePairs(vector<int> d)
 	return r;
 }
 
-/*O(nlg^n)µÄ¹é²¢½â·¨*/
+/*O(nlg^n)çš„å½’å¹¶è§£æ³•*/
 int InversePairs(vector<int> data) 
 {
 	if (data.size() <= 0)
@@ -495,7 +499,7 @@ int InversePairsCore(vector<int> &data, vector<int>&copy, int start, int end)
 
 
 
-/************** ²¿·Ö²âÊÔÓÃÀı  **************************/
+/************** éƒ¨åˆ†æµ‹è¯•ç”¨ä¾‹  **************************/
 void TestNum1ToN()
 {
 	cout << NumberOf1Between1AndN(20) << endl;
