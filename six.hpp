@@ -10,9 +10,9 @@ struct ListNode
 	{}
 };
 /*
-37£º>Á½¸öÁ´±í¹«¹²½Úµã
+37ï¼š>ä¸¤ä¸ªé“¾è¡¨å…¬å…±èŠ‚ç‚¹
 
-Ê×ÏÈ »ñÈ¡Á½¸öÁ´±í³¤¶È£¬²îÖµÎªx£¬³¤µÄÏÈ×ßx²½£»Á½¸öÍ¬Ê±×ß£¬µÚÒ»¸ö¹«¹²½Úµã¼´ÊÇ
+é¦–å…ˆ è·å–ä¸¤ä¸ªé“¾è¡¨é•¿åº¦ï¼Œå·®å€¼ä¸ºxï¼Œé•¿çš„å…ˆèµ°xæ­¥ï¼›ä¸¤ä¸ªåŒæ—¶èµ°ï¼Œç¬¬ä¸€ä¸ªå…¬å…±èŠ‚ç‚¹å³æ˜¯
 
 O(m+n)
 */
@@ -64,13 +64,13 @@ ListNode* FindCommNode(ListNode* pHead1, ListNode* pHead2)
 }
 
 /*
-38  :>Êı×ÖÔÚÅÅĞòÊı×éÖĞ³öÏÖµÄ´ÎÊı
-{1,2,3,3,3,3,4,5}   3³öÏÖ4´Î
+38  :>æ•°å­—ï¼ˆé‡å¤ä¸”è¿ç»­ï¼‰åœ¨æ’åºæ•°ç»„ä¸­å‡ºç°çš„æ¬¡æ•°
+{1,2,3,3,3,3,4,5}   3å‡ºç°4æ¬¡
 
-±éÀúÒ»±éO(n)
-¸üÓÅ½â£º
-¹é²¢²éÕÒµÚÒ»¸ö3£¬Î»ÖÃfirst£»×îºóÒ»¸ö3£¬Î»ÖÃlast
-¸öÊı last-first+1
+éå†ä¸€éO(n)
+æ›´ä¼˜è§£ï¼š
+å½’å¹¶æŸ¥æ‰¾ç¬¬ä¸€ä¸ª3ï¼Œä½ç½®firstï¼›æœ€åä¸€ä¸ª3ï¼Œä½ç½®last
+ä¸ªæ•° last-first+1
 O(lg^n)
 */
 
@@ -137,7 +137,7 @@ int  GetNumlastPos(int* ar, int len, int start, int end, int k)
 }
 
 /*
-39:> ¶ş²æÊ÷µÄÉî¶È
+39:> äºŒå‰æ ‘çš„æ·±åº¦
 */
 struct BinTree
 {
@@ -157,9 +157,9 @@ int Depth(BinTree* pRoot)
 	return (nLeft > nRight) ? (nLeft + 1) : (nRight + 1);
 }
 /*
-ÅĞ¶ÏÊÇ²»ÊÇÆ½ºâ¶ş²æÊ÷
-£¨Ã¿¸ö½Úµã±éÀúÒ»±éµÄ½â·¨£©
-¼´£¬±éÀúµ±Ç°½áµãÇ°£¬Æä×óÓÒ×ÓÊ÷ÒÑ¾­±éÀú²¢È·¶¨ÁËÉî¶È
+åˆ¤æ–­æ˜¯ä¸æ˜¯å¹³è¡¡äºŒå‰æ ‘
+ï¼ˆæ¯ä¸ªèŠ‚ç‚¹éå†ä¸€éçš„è§£æ³•ï¼‰
+å³ï¼Œéå†å½“å‰ç»“ç‚¹å‰ï¼Œå…¶å·¦å³å­æ ‘å·²ç»éå†å¹¶ç¡®å®šäº†æ·±åº¦
 */
 
 bool IsBalanced(BinTree* pRoot, int *depth);
@@ -195,14 +195,14 @@ bool IsBalanced(BinTree* pRoot, int *depth)
 }
 
 /*
-40:>    Êı×éÖĞÖ»³öÏÖÒ»´ÎµÄÊı£¨2¸ö£©£¨ÆäËû¶¼³öÏÖ2´Î£©  Ê±¼ä£ºO(n)£¬¿Õ¼äO(1)
-Òì»ò
+40:>    æ•°ç»„ä¸­åªå‡ºç°ä¸€æ¬¡çš„æ•°ï¼ˆ2ä¸ªï¼‰ï¼ˆå…¶ä»–éƒ½å‡ºç°2æ¬¡ï¼‰  æ—¶é—´ï¼šO(n)ï¼Œç©ºé—´O(1)
+å¼‚æˆ–
 {2,4,3,6,3,2,5,5}
-µÚÒ»´ÎÒì»ò ¼´4^6->0010
-ÓÃ0010°ÑÊı×é·Ö³ÉÁ½²¿·Ö{2,3,6,2,3},{4,5,5}
+ç¬¬ä¸€æ¬¡å¼‚æˆ– å³4^6->0010
+ç”¨0010æŠŠæ•°ç»„åˆ†æˆä¸¤éƒ¨åˆ†{2,3,6,2,3},{4,5,5}
 */
 
-//»ñÈ¡Á½¸ö³öÏÖÒ»´ÎÊıµÄÒì»ò½á¹û
+//è·å–ä¸¤ä¸ªå‡ºç°ä¸€æ¬¡æ•°çš„å¼‚æˆ–ç»“æœ
 int _res(int ar[], int len)
 {
 	int res = 0;
@@ -241,8 +241,8 @@ void FindOnlyAppearOnce(int ar[], int len, int* num1, int* num2)
 
 
 /*
-41£ººÍÎªsµÄÁ½¸öÊı £» ºÍÎªsµÄÁ¬ĞøÕıÕûÊıĞòÁĞ
-{1£¬2£¬4£¬7£¬11£¬15}  ÇóºÍÎª15µÄÁ½¸öÊı(Í·Î²Ö¸Õë)
+41ï¼šå’Œä¸ºsçš„ä¸¤ä¸ªæ•° ï¼› å’Œä¸ºsçš„è¿ç»­æ­£æ•´æ•°åºåˆ—
+{1ï¼Œ2ï¼Œ4ï¼Œ7ï¼Œ11ï¼Œ15}  æ±‚å’Œä¸º15çš„ä¸¤ä¸ªæ•°(å¤´å°¾æŒ‡é’ˆ)
 */
 bool FindTwoNumOfSum(int ar[], int len, int sum, int *num1, int *num2)
 {
@@ -272,9 +272,9 @@ bool FindTwoNumOfSum(int ar[], int len, int sum, int *num1, int *num2)
 }
 
 /*
-´òÓ¡ºÍÎªnµÄĞòÁĞ
+æ‰“å°å’Œä¸ºnçš„åºåˆ—
 1+2+3+4+5=4+5+6=7+8=15
-´òÓ¡ 1~5£¬4~6£¬7~8
+æ‰“å° 1~5ï¼Œ4~6ï¼Œ7~8
 */
 void printSeq(int small, int big)
 {
@@ -290,7 +290,7 @@ void FindSeqOfSum(int sum)
 
 	int small = 1;
 	int big = 2;
-	int times = (sum + 1) / 2; //small bigÁ½¸öÊı  Ö»ÓÃÔö¼Óµ½sumµÄÒ»°ë
+	int times = (sum + 1) / 2; //small bigä¸¤ä¸ªæ•°  åªç”¨å¢åŠ åˆ°sumçš„ä¸€åŠ
 	int curSum = small + big;
 
 	while (small < times)
@@ -312,8 +312,8 @@ void FindSeqOfSum(int sum)
 }
 
 /*
-42:> ·­×ª¾ä×Ó £» ×óĞı×Ö·û´®
-i am student -> student am i (ÕûÌå·­×ª£¬¾Ö²¿·­×ª)
+42:> ç¿»è½¬å¥å­ ï¼› å·¦æ—‹å­—ç¬¦ä¸²
+i am student -> student am i (æ•´ä½“ç¿»è½¬ï¼Œå±€éƒ¨ç¿»è½¬)
 */
 
 
@@ -337,9 +337,9 @@ void ReserveSentense(char* pData)
 	char* pEnd = pBegin;
 	while (*pEnd != '\0')
 		pEnd++;
-	pEnd--;  //Ö¸ÏòÎ²
+	pEnd--;  //æŒ‡å‘å°¾
 
-	Reserve(pBegin, pEnd);//ÕûÌå·­×ª
+	Reserve(pBegin, pEnd);//æ•´ä½“ç¿»è½¬
 
 	pEnd = pBegin = pData;
 	while (*pBegin != '\0')
@@ -361,17 +361,17 @@ void ReserveSentense(char* pData)
 
 
 /*
-×óĞıµ¥´Ê
+å·¦æ—‹å•è¯
 abcdefg ->2 -> cdefgab
-·ÖÁ½²¿·Ö ab cdefg
-ÕûÌå·­×ª ²¿·Ö·­×ª
+åˆ†ä¸¤éƒ¨åˆ† ab cdefg
+æ•´ä½“ç¿»è½¬ éƒ¨åˆ†ç¿»è½¬
 */
 void LeftRotateStr(char*pStr, int n)
 {
 	if (pStr == NULL || n <= 0)
 		return;
 	int len = strlen(pStr);
-	n %= len;//´óÓÚ³¤¶È»áÖ¸Ïò·Ç·¨ÄÚ´æ
+	n %= len;//å¤§äºé•¿åº¦ä¼šæŒ‡å‘éæ³•å†…å­˜
 
 	char* pFirstStart = pStr;
 	char* pFirstEnd = pStr + n - 1;
@@ -385,10 +385,10 @@ void LeftRotateStr(char*pStr, int n)
 
 
 /*
-45:> Ô¼Éª·ò»·
+45:> çº¦ç‘Ÿå¤«ç¯
 */
 
-//ÊıÑ§½â·¨
+//æ•°å­¦è§£æ³•
 int LastLive(size_t total, size_t key)
 {
 	if (total < 1 || key < 1)
@@ -404,11 +404,11 @@ int LastLive(size_t total, size_t key)
 
 
 /*
-	46.	1~nÇóºÍ	
-	²»ÄÜÊ¹ÓÃ * / for while if else switch case ÒÔ¼°ÈıÄ¿ÔËËã·û 
+	46.	1~næ±‚å’Œ	
+	ä¸èƒ½ä½¿ç”¨ * / for while if else switch case ä»¥åŠä¸‰ç›®è¿ç®—ç¬¦ 
 
-	Ë¼Â·£ºÀûÓÃĞéº¯ÊıµÄÌØĞÔ
-	ÈÃ n==0 ºÍ n!=0Ê±£¬ÓĞ²»Í¬µÄµ÷ÓÃ
+	æ€è·¯ï¼šåˆ©ç”¨è™šå‡½æ•°çš„ç‰¹æ€§
+	è®© n==0 å’Œ n!=0æ—¶ï¼Œæœ‰ä¸åŒçš„è°ƒç”¨
 */
 class A;
 A* Array[2];
@@ -444,8 +444,8 @@ int SumRes(size_t n)
 }
 
 /*
-	47.²»ÓÃ + - * / ×ö¼Ó·¨
-	Î»ÔËËã£º
+	47.ä¸ç”¨ + - * / åšåŠ æ³•
+	ä½è¿ç®—ï¼š
 */
 
 int Add(int num1, int num2)
@@ -458,8 +458,8 @@ int Add(int num1, int num2)
 			num1 = num2;
 			break;
 		}
-		sum = num1^num2;		//Òì»ò ÕÒ³ö¶ÔÓ¦Î»ÖÃ²»Í¬
-		cur = (num1&num2) << 1;		//¶ÔÓ¦Î»ÖÃÏàÍ¬ÇÒÎªÒ»£¬ËµÃ÷Òª½øÎ»
+		sum = num1^num2;		//å¼‚æˆ– æ‰¾å‡ºå¯¹åº”ä½ç½®ä¸åŒ
+		cur = (num1&num2) << 1;		//å¯¹åº”ä½ç½®ç›¸åŒä¸”ä¸ºä¸€ï¼Œè¯´æ˜è¦è¿›ä½
 
 		num1 = sum;
 		num2 = cur;
@@ -469,19 +469,19 @@ int Add(int num1, int num2)
 }
 
 /*
-	48.²»ÄÜ±»¼Ì³ĞµÄÀà
+	48.ä¸èƒ½è¢«ç»§æ‰¿çš„ç±»
 */
 
 template<class T>
 class MakeSealed
 {
-	friend T;			//ÊµÀı»¯ºó£¬ÓÑÔªÉí·İ£¬·ÃÎÊ²»»á³ö´í
+	friend T;			//å®ä¾‹åŒ–åï¼Œå‹å…ƒèº«ä»½ï¼Œè®¿é—®ä¸ä¼šå‡ºé”™
 private:
 	MakeSealed() {};
 	~MakeSealed() {};
 };
 
-class SealedClass :virtual public MakeSealed<SealedClass>	//¸ÃÀà²»ÄÜ±»¼Ì³Ğ
+class SealedClass :virtual public MakeSealed<SealedClass>	//è¯¥ç±»ä¸èƒ½è¢«ç»§æ‰¿
 {
 public:
 	SealedClass() {}
@@ -495,7 +495,7 @@ public:
 	~Try() {};
 };
 
-/********** ²¿·Ö²âÊÔÓÃÀı ******************/
+/********** éƒ¨åˆ†æµ‹è¯•ç”¨ä¾‹ ******************/
 void TestAdd()
 {
 	cout << Add(6, 2) << endl;
