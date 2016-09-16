@@ -99,7 +99,7 @@ bool lastOrderOfBST(int ar[], int len)
 	bool rightRes = true;
 
 	if (leftEndIndex > 0)
-		leftEndIndex = lastOrderOfBST(ar, leftEndIndex);
+		leftRes = lastOrderOfBST(ar, leftEndIndex);
 	if (leftEndIndex < len - 1)
 		rightRes = lastOrderOfBST(ar+leftEndIndex,len-1-leftEndIndex);
 
