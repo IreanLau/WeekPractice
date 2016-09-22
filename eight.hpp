@@ -504,3 +504,66 @@ void TestPrint()
 	size_t k = 4;
 	cout << KthNodeCore(root, k)->_data << endl; //二叉搜索树第k大
 }
+
+
+
+/*
+求数组中第K的元素的一般方法就是使用快速排序的划分，
+Partion(seq,start,end) = p, 如果p=k 则ok。如果p >k 
+则在start, p -1的区间里找第K大的数，Partion(seq,start,p-1)
+否则partion(seq,p+1,end)
+算法的平均时间复杂度为O(N),最坏情况为N^2，即每次划分把数组变为为（n-1） 和1的两断.
+对此算法导论上给出了一个最坏情况下为O(N)的算法
+该算法就是每次partion的时候找到一个好的划分，用中位数的中位数作为pivot。
+把数组分为 N/5组，每组插入排序之后求得中位数，共 N/5 个中位数，对这N/5 中位数，
+使用同样过程再排序再求中位数（递归完成），最后求得N/5的中位数的中位数 作为最佳pivot
+*/
+
+int  getPerfectPivot (int[]seq,int start,int end)
+{  
+	if(start==end)  
+		return seq[start];  
+ 
+	int groups = (end-start+1)%5==0?(end-start+1)/5:(end-start+1)/5+1;  
+	int[] group_median = new int[groups];
+
+	for(int i=0; i < groups;i++)
+	{  
+		int from = start+i*5;  
+		int to = (from+5 < end)?(from+5):end;  
+		for(int k=from+1;k<to;k++)
+		{  
+			if(seq[k] < seq[k+1]) 
+ 		    	std::swap(seq[k],seq[k+1]); 
+
+		}  
+		group_median[i] = seq[(from+to)/2];  
+	}  
+	return getPerfectPivot(group_median,0,groups-1);  
+}  
+
+
+int partionByMedian(int start,int end, int[]seq)
+{  
+	int pivot =  getPerfectPivot (seq,start,end);  
+	//这里不再使用最后一个元素，也不使用rand随机设定一个元素  
+	int swap_index = start -1;  
+	for(int i = start;i<end;i++)
+	{  
+		if(seq[i] <pivot)
+		{  
+			swap_index++;  
+			std::swap(seq[i],seq[swap_index]);
+		}  	
+		if(seq[i]==pivot && seq[end]!=pivot)
+		{  
+			std::swap(seq[i],seq[end]);
+			i--;  
+		}  
+        //这一段是找出最好的pivot在数组中的位置并放到末尾。  
+	}  
+	swap_index++;  
+	seq[end] = seq[swap_index];  
+	seq[swap_index] = pivot;  
+	return swap_index;  
+}  	
