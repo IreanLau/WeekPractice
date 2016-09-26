@@ -6,7 +6,7 @@
 
 
 /*
-	Á½¸öÕ»ÊµÏÖÒ»¸ö¶ÓÁĞ£¬
+	ä¸¤ä¸ªæ ˆå®ç°ä¸€ä¸ªé˜Ÿåˆ—ï¼Œ
 	appendTail
 	deleteHead
 */
@@ -40,15 +40,15 @@ public:
 		_stack2.pop();
 	}
 public:
-	stack<T> _stack1;		//Êı¾İÏÈ½øÈë_stack1
-	stack<T> _stack2;		//_stack2×÷Îª¸¨Öú¿Õ¼äÊ¹ÓÃ	
+	stack<T> _stack1;		//æ•°æ®å…ˆè¿›å…¥_stack1
+	stack<T> _stack2;		//_stack2ä½œä¸ºè¾…åŠ©ç©ºé—´ä½¿ç”¨	
 };
 
 void TestQueMadeOfStack()
 {
 	QueMadeOfStack<int> _queue;
 
-	//_queue.deleteHead();    //²âÊÔ¿ÕµÄÊ±ºòÍ·²¿É¾³ı
+	//_queue.deleteHead();    //æµ‹è¯•ç©ºçš„æ—¶å€™å¤´éƒ¨åˆ é™¤
 	_queue.appendTail(1);
 	_queue.appendTail(2);
 	_queue.appendTail(3);
@@ -57,7 +57,51 @@ void TestQueMadeOfStack()
 }
 
 /*
-	CMyStringÀà£¬Ìí¼Ó¸³ÖµÔËËã·û
+	ä¸¤ä¸ªé˜Ÿåˆ—->æ ˆ
+
+	æ€è·¯ ï¼šq1æ˜¯ä¸“èŒè¿›å‡ºæ ˆçš„ï¼Œq2åªæ˜¯ä¸ªä¸­è½¬ç«™
+
+	å…¥æ ˆï¼šç›´æ¥å…¥é˜Ÿåˆ—q1å³å¯
+	å‡ºæ ˆï¼šæŠŠq1çš„é™¤æœ€åä¸€ä¸ªå…ƒç´ å¤–å…¨éƒ¨è½¬ç§»åˆ°é˜Ÿq2ä¸­,ç„¶åæŠŠåˆšæ‰å‰©ä¸‹q1ä¸­çš„é‚£ä¸ªå…ƒç´ å‡ºé˜Ÿåˆ—ã€‚ä¹‹åæŠŠq2ä¸­çš„å…¨éƒ¨å…ƒç´ è½¬ç§»å›q1ä¸­
+*/
+
+template<class T>
+class StackMadeOfQue
+{
+public:
+	void add(const T& val)
+	{
+		_queue1.push(val);
+	}
+
+	void del()
+	{
+		if(_queue1.empty())
+		{
+			cout<<"stack Empty"<<endl;
+			exit(0);
+		}
+
+		while(_queue1.size() != 1)
+		{
+			T temp = _queue1.front();
+			_queue2.push(temp);
+			_queue1.pop();
+
+		}
+
+		_queue1.pop();
+
+		std::swap(_queue1,_queue2);
+	}
+private:
+	queue<T> _queue1;
+	queue<T> _queue2;
+};
+
+
+/*
+	CMyStringç±»ï¼Œæ·»åŠ èµ‹å€¼è¿ç®—ç¬¦
 */
 
 class CMyString
@@ -75,15 +119,15 @@ public:
 			delete[]_ptr;
 	}
 
-	//½»»»¿Õ¼äµÄ¿½±´¹¹Ôì ºÍ ¸³ÖµÔËËã·û
+	//äº¤æ¢ç©ºé—´çš„æ‹·è´æ„é€  å’Œ èµ‹å€¼è¿ç®—ç¬¦
 	CMyString(const CMyString& rhs)  
-		:_ptr(NULL)						 //Ã»¹¹ÔìÖ®Ç°£¬ptrµÄÖµÎªËæ»úÖµ£¬ ½»»»ºó,Îö¹¹Ëæ»úÖµÊÇ²»ÔÊĞíµÄ
+		:_ptr(NULL)						 //æ²¡æ„é€ ä¹‹å‰ï¼Œptrçš„å€¼ä¸ºéšæœºå€¼ï¼Œ äº¤æ¢å,ææ„éšæœºå€¼æ˜¯ä¸å…è®¸çš„
 	{
 		CMyString tmp(rhs._ptr);
 		std::swap(tmp._ptr,_ptr);
 	}
 
-	CMyString& operator=(CMyString rhs)	//²ÎÊı´«µİÖµ£¬¶ø²»ÊÇÒıÓÃ£»¼ä½Óµ÷ÓÃ¿½±´¹¹Ôì
+	CMyString& operator=(CMyString rhs)	//å‚æ•°ä¼ é€’å€¼ï¼Œè€Œä¸æ˜¯å¼•ç”¨ï¼›é—´æ¥è°ƒç”¨æ‹·è´æ„é€ 
 	{
 		std::swap(_ptr, rhs._ptr);
 		return *this;
@@ -116,11 +160,11 @@ void TestCMyString()
 
 
 /*
-	Éè¼ÆÏß³Ì°²È«µÄµ¥ÀıÀà
+	è®¾è®¡çº¿ç¨‹å®‰å…¨çš„å•ä¾‹ç±»
 */
 
-//¶öººÄ£Ê½ ÎŞÂÛÊÇ·ñÊ¹ÓÃÔÚ³ÌĞò¿ªÊ¼²úÉúÒ»¸öÊµÀı£¬²¢ÔÚÒÔºó·µ»Ø
-//¾²Ì¬ÊµÀı³õÊ¼»¯ ÔÚ½øÈëÖ÷º¯ÊıÖ®Ç°¾ÍÒÑ¾­Íê³É³õÊ¼»¯
+//é¥¿æ±‰æ¨¡å¼ æ— è®ºæ˜¯å¦ä½¿ç”¨åœ¨ç¨‹åºå¼€å§‹äº§ç”Ÿä¸€ä¸ªå®ä¾‹ï¼Œå¹¶åœ¨ä»¥åè¿”å›
+//é™æ€å®ä¾‹åˆå§‹åŒ– åœ¨è¿›å…¥ä¸»å‡½æ•°ä¹‹å‰å°±å·²ç»å®Œæˆåˆå§‹åŒ–
 
 class Singleton
 {
@@ -146,9 +190,9 @@ void TestSingleTon()
 
 
 /*
-	¶şÎ¬Êı×é ´Ó×óµ½ÓÒµİÔö
-	´ÓÉÏµ½ÏÂ µİÔö
-	¸ø¶¨ÊıÖµ  ÅĞ¶ÏÊÇ·ñ´æÔÚ
+	äºŒç»´æ•°ç»„ ä»å·¦åˆ°å³é€’å¢
+	ä»ä¸Šåˆ°ä¸‹ é€’å¢
+	ç»™å®šæ•°å€¼  åˆ¤æ–­æ˜¯å¦å­˜åœ¨
 */
 bool FindInMatrix(vector<vector<int> > array, int target)
 {
@@ -157,8 +201,8 @@ bool FindInMatrix(vector<vector<int> > array, int target)
 	int cols = array[0].size();
 	if (rows > 0 && cols > 0)
 	{
-		int row = 0;//ĞĞ
-		int col = cols - 1;//ÁĞ
+		int row = 0;//è¡Œ
+		int col = cols - 1;//åˆ—
 		while (row < rows && col >= 0)
 		{
 			if (array[row][col] == target)
@@ -199,19 +243,19 @@ void TestFindInMatrix()
 }
 
 /*
-	×Ö·û´®ÖĞÖ¸¶¨×Ö·ûÌæ»»
+	å­—ç¬¦ä¸²ä¸­æŒ‡å®šå­—ç¬¦æ›¿æ¢
 	We are happy   => We%20are%20happy
 */
 
-//ÏÈ»ñÈ¡ĞèÒª³¤¶È
-//´ÓºóÏòÇ°ÒÆ¶¯ O£¨n£©µÄ×ö·¨
+//å…ˆè·å–éœ€è¦é•¿åº¦
+//ä»åå‘å‰ç§»åŠ¨ Oï¼ˆnï¼‰çš„åšæ³•
 void BlankReplace(char _str[],int len)
 {
 	if (_str==NULL && len<=0)
 		return;
 
 	
-	int StringLen = 0;		//	»ñÈ¡×Ö·û´®ÓĞĞ§³¤¶È
+	int StringLen = 0;		//	è·å–å­—ç¬¦ä¸²æœ‰æ•ˆé•¿åº¦
 	int BlankNum = 0;
 	for (int i = 0; _str[i] != '\0';++i)
 	{
@@ -221,7 +265,7 @@ void BlankReplace(char _str[],int len)
 	}
 
 	int LenAfterReplace = StringLen + BlankNum * 2;
-	if (LenAfterReplace > len)   //³¬³ö·¶Î§
+	if (LenAfterReplace > len)   //è¶…å‡ºèŒƒå›´
 		return;
 
 	int indexOfOriginal = StringLen;
@@ -252,7 +296,7 @@ void TestBlankReplace()
 }
 
 /*
-	´ÓÎ²µ½Í·´òÓ¡Á´±í
+	ä»å°¾åˆ°å¤´æ‰“å°é“¾è¡¨
 */
 struct Node
 {
@@ -276,7 +320,7 @@ void ResPrint(Node* pBegin)
 }
 
 
-//Êı¾İÁ¿´óÊ±ºò£¬±ÜÃâÊ¹ÓÃµİ¹é
+//æ•°æ®é‡å¤§æ—¶å€™ï¼Œé¿å…ä½¿ç”¨é€’å½’
 void _ResPrint(Node* pBegin)
 {
 	stack<Node*> _st;
@@ -299,7 +343,7 @@ void _ResPrint(Node* pBegin)
 
 
 /*
-	ÖØ½¨¶ş²æÊ÷
+	é‡å»ºäºŒå‰æ ‘
 	pre  1,2,4,7,3,5,6,8
 	in   4,7,2,1,5,3,8,6
 */
@@ -325,25 +369,25 @@ BinTree* ConstructWithPreAndIn(int* headpre, int *tailpre, int* headin, int* tai
 	int rootvalue = headpre[0];
 	BinTree* root = new BinTree(rootvalue);
 
-	//±ß½ç
+	//è¾¹ç•Œ
 	if (headpre == tailpre)
 	{
-		if (headin == tailin && *headpre == *headin)	//Ö»ÓĞÒ»¸öÊı
+		if (headin == tailin && *headpre == *headin)	//åªæœ‰ä¸€ä¸ªæ•°
 			return root;
 		else
 			throw std::exception("invalid input");
 	}
 
-	//ÖĞĞò:> ÕÒµ½¸ùµÄÎ»ÖÃ
+	//ä¸­åº:> æ‰¾åˆ°æ ¹çš„ä½ç½®
 	int *rootIn = headin;
 	while (rootIn <= tailin && *rootIn != rootvalue)
 		++rootIn;
 
-	//×ßµ½½áÎ²Ã»ÕÒµ½
+	//èµ°åˆ°ç»“å°¾æ²¡æ‰¾åˆ°
 	if (rootIn == tailin && *rootIn != rootvalue)
 		throw std::exception("invalid input");
 
-	//ĞŞ¸Ä³¤¶È£¬Î²±ß½ç
+	//ä¿®æ”¹é•¿åº¦ï¼Œå°¾è¾¹ç•Œ
 	int LeftLength = rootIn - headin;
 	int* LeftPreorderEnd = headpre + LeftLength;
 
